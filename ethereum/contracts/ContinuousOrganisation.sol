@@ -13,14 +13,13 @@ contract ContinuousOrganisation {
     mapping(address => uint) public balances;
     address public owner; // owner of the smart contract
     uint public sellReserve = 0;
-    uint public taxReserve = 0;
 
 
     /* Permission rights */
     modifier isOwner(address sender) { require(sender == owner); _; }
 
     /* Events */
-    event UpdateTokens(uint tokens, uint sellReserve, uint taxReserve);
+    event UpdateTokens(uint tokens, uint sellReserve);
 
 
     /* This is the constructor. Solidity does not implement float number so we have to multiply constants by 1000 and rounding them before creating the smart contract.
@@ -72,7 +71,7 @@ contract ContinuousOrganisation {
         sellReserve += alpha*msg.value;
         owner.transfer((1-alpha)*msg.value);
 
-        emit UpdateTokens(nTokens, sellReserve, taxReserve);
+        emit UpdateTokens(nTokens, sellReserve);
     }
 
     function burning(uint tokens) public {
@@ -84,7 +83,7 @@ contract ContinuousOrganisation {
         sellReserve -= withdraw;
         msg.sender.transfer(withdraw);
 
-        emit UpdateTokens(nTokens, sellReserve, taxReserve);
+        emit UpdateTokens(nTokens, sellReserve);
     }
 
     function revenues()
@@ -98,9 +97,8 @@ contract ContinuousOrganisation {
 
         // redistribute tokens
         sellReserve += beta*msg.value;
-        taxReserve += gamma*msg.value;
         owner.transfer((1-beta-gamma)*msg.value);
 
-        emit UpdateTokens(nTokens, sellReserve, taxReserve);
+        emit UpdateTokens(nTokens, sellReserve);
     }
 }

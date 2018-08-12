@@ -25,7 +25,6 @@ const run = async () => {
   slope = Math.round(parseFloat(parameters.slope)*1000);
   alpha = Math.round(parseFloat(parameters.alpha)*1000);
   beta = Math.round(parseFloat(parameters.beta)*1000);
-  gamma = Math.round(parseFloat(parameters.gamma)*1000);
 
 
   // initialize smart contract
@@ -41,7 +40,7 @@ const run = async () => {
   );
 
   let deployedContract = null;
-  smartContract.deploy({arguments: [slope, alpha, beta, gamma]})
+  smartContract.deploy({arguments: [slope, alpha, beta]})
   .send(function (error, transactionHash) {
     console.log('transactionHash', transactionHash);
   })
@@ -61,7 +60,7 @@ const run = async () => {
           deployedContract.options.address
         ).replace(
           /REPLACE_WITH_ABI_DEFINITION/g,
-          compiledCode.contracts[':Voting'].interface
+          compiledCode.contracts[':ContinuousOrganisation'].interface
         )
       );
     });
