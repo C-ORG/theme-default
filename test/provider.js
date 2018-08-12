@@ -22,15 +22,11 @@ describe("Provider of ETH", function() {
           this.timeout(6000);
           code = fs.readFileSync('ethereum/contracts/ContinuousOrganisation.sol').toString()
           this.compiledCode = solc.compile(code)
-          this.abiDefinition = JSON.parse(compiledCode.contracts[':ContinuousOrganisation'].interface)
-          expect(abiDefinition).to.not.be.equal([]);
-      });
-  });
+          this.abiDefinition = JSON.parse(this.compiledCode.contracts[':ContinuousOrganisation'].interface)
+          expect(this.abiDefinition).to.not.be.equal([]);
 
-  describe("Deployement", function() {
-      if("deployes to the blockchain", function () {
-          COContract = web3.eth.contract(self.abiDefinition)
-          byteCode = self.compiledCode.contracts[':ContinuousOrganisation'].bytecode
+          COContract = web3.eth.contract(this.abiDefinition)
+          byteCode = this.compiledCode.contracts[':ContinuousOrganisation'].bytecode
           deployedContract = COContract
       });
   });
