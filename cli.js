@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const fs = require("fs");
 // blockchain
 const Web3 = require('web3');
 const http = require('http');
@@ -30,7 +31,7 @@ const run = async () => {
   // initialize smart contract
   const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
   const asciiToHex = Web3.utils.asciiToHex;
-  const filename = 'ethereum/contracts/ContinuousOrganisation.sol';
+  const filename = 'contracts/ContinuousOrganisation.sol';
   const compiledCode = blockchain.compilation(filename);
   const byteCode = compiledCode.contracts[':ContinuousOrganisation'].bytecode;
   const abiDefinition = JSON.parse(compiledCode.contracts[':ContinuousOrganisation'].interface);
@@ -42,7 +43,7 @@ const run = async () => {
   let deployedContract = null;
   smartContract.deploy({arguments: [slope, alpha, beta]})
   .send(function (error, transactionHash) {
-    console.log('transactionHash', transactionHash);
+    // console.log('transactionHash', transactionHash);
   })
   .then((result) => {
     deployedContract = result;
@@ -68,7 +69,7 @@ const run = async () => {
       socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
     });
     server.listen(8000, () => {
-      console.log('Listening on localhost:8000');
+      console.log('Listening on http://localhost:8000');
     });
   });
 };

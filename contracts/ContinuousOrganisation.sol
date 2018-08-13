@@ -6,7 +6,6 @@ contract ContinuousOrganisation {
     uint slope = 1000; // parametrize the buying linear curve
     uint alpha = 100; // fraction put into selling reserves when investors buy
     uint beta = 300; // fraction put into selling reserves when the CO has revenues
-    uint gamma = 100; // coefficient put into taxing reserves when the CO has revenues
 
     /* The tokens of the Continuous Organisation */
     uint nTokens = 0;
@@ -24,12 +23,12 @@ contract ContinuousOrganisation {
 
     /* This is the constructor. Solidity does not implement float number so we have to multiply constants by 1000 and rounding them before creating the smart contract.
     */
-    constructor(uint paramA, uint paramAlpha, uint paramBeta, uint paramGamma) public {
+    constructor(uint paramA, uint paramAlpha, uint paramBeta) public {
+        require(paramAlpha < 1001 && paramBeta < 1001);
         owner = msg.sender;
         slope = paramA;
         alpha = paramAlpha;
         beta = paramBeta;
-        gamma = paramGamma;
     }
 
     /* Getters and setters */
@@ -42,9 +41,25 @@ contract ContinuousOrganisation {
     function setBeta(uint paramBeta) public isOwner(msg.sender) {
         beta = paramBeta;
     }
-    function setGamma(uint paramGamma) public isOwner(msg.sender) {
-        gamma = paramGamma;
+    function getBalance()
+        public
+        view
+        returns (uint y) {
+        y = balances[msg.sender];
     }
+    function getSellReserve()
+        public
+        view
+        returns (uint y) {
+        y = sellReserve;
+    }
+    function getNumTokens()
+        public
+        view
+        returns (uint y) {
+        y = nTokens;
+    }
+
 
     /* Babylonian method for square root. See: https://ethereum.stackexchange.com/a/2913 */
     function sqrt(uint x)
@@ -62,25 +77,30 @@ contract ContinuousOrganisation {
     /* Minting and burning tokens */
     // #TODO protection against overflows
     function minting() public payable {
+        require(msg.value > 0);
+
         // create tokens
-        uint tokens = sqrt(2*msg.value/slope + nTokens*nTokens) - nTokens;
+        uint invest = msg.value;
+        uint tokens = sqrt(2*invest*1000/slope + nTokens*nTokens) - nTokens;
         balances[msg.sender] += tokens;
         nTokens += tokens;
 
         // redistribute tokens
-        sellReserve += alpha*msg.value;
-        owner.transfer((1-alpha)*msg.value);
+        sellReserve += alpha*invest;
+        owner.transfer((1000-alpha)/1000*invest);
 
         emit UpdateTokens(nTokens, sellReserve);
     }
 
     function burning(uint tokens) public {
         // check funds
+        require(tokens > 0);
         require(balances[msg.sender] >= tokens);
-        balances[msg.sender] -= tokens;
 
+        balances[msg.sender] -= tokens;
         uint withdraw = sellReserve*tokens/nTokens/nTokens*(2*nTokens - tokens);
         sellReserve -= withdraw;
+        withdraw /= 1000;
         msg.sender.transfer(withdraw);
 
         emit UpdateTokens(nTokens, sellReserve);
@@ -90,14 +110,16 @@ contract ContinuousOrganisation {
         public
         isOwner(msg.sender)
         payable {
+        require(msg.value > 0);
+        uint revenue = msg.value;
         // create tokens
-        uint tokens = sqrt(2*msg.value/slope + nTokens*nTokens) - nTokens;
+        uint tokens = sqrt(2*revenue*1000/slope + nTokens*nTokens) - nTokens;
         balances[owner] += tokens;
         nTokens += tokens;
 
         // redistribute tokens
-        sellReserve += beta*msg.value;
-        owner.transfer((1-beta-gamma)*msg.value);
+        sellReserve += beta*revenue;
+        owner.transfer((1-beta)*revenue/1000);
 
         emit UpdateTokens(nTokens, sellReserve);
     }

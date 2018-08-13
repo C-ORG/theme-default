@@ -2,3 +2,4 @@
 *.swp
 private/
 node_modules/
+build/
