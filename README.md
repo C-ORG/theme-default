@@ -28,7 +28,7 @@ npm run cli
 
 Then point your browser to `http://localhost:8000` for the web version of the voting app.
 
-The `server.js` file includes the smart contract setup and deployment.
+The `cli.js` file includes the smart contract setup and deployment.
 
 
 
