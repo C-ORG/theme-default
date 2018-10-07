@@ -27,15 +27,12 @@ window.addEventListener('load', function() {
   userAddress = web3.eth.defaultAccount;
   web1 = new Web3(web3.currentProvider);
   web0 = web3;
-  let addressURL = getUrlParameter('address');
-  if (addressURL == undefined){
-    contractInstance = new web1.eth.Contract(abi, address);
+  if (getUrlParameter('address') != undefined){
+    address = getUrlParameter('address');
   }
-  else {
-    contractInstance = new web1.eth.Contract(abi, addressURL);
-  }
+  contractInstance = new web1.eth.Contract(abi, address);
+  $("#sc-address").val(address);
 
-  // web3.eth.getAccounts((error, result) => { accounts.push(result[0]); });
   accounts = [
       {addr:"0x932a4C51523f445f5bad6B46FB776786f3Ec2C54",
       name:"Organization",
@@ -110,6 +107,12 @@ function transfer() {
 
 }
 
+
+function connect() {
+  address = $("#sc-address").val();
+  contractInstance = new web1.eth.Contract(abi, address);
+  update();
+}
 
 function revenue() {
   const value = web0.toWei($("#revenue-value").val(), 'ether');
