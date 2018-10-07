@@ -107,6 +107,30 @@ function revenue() {
   });
 }
 
+function grant() {
+  const value = $("#grant-value").val();
+  wei = web0.toWei(value, 'ether');
+  contractInstance.methods.storeDividend().send({
+    from: userAddress,
+    gas: 4712388,
+    gasPrice: 100000,
+    value: wei
+  })
+  .then(
+    web0.eth.accounts.forEach(
+      contractInstance.methods.askDividend().send({
+        from: userAddress,
+        gas: 4712388,
+        gasPrice: 100000
+      })
+    )
+  ).then(function() {
+    updateBalance(userAddress);
+    updateSellReserve();
+    updateNumTokens();
+  });
+}
+
 
 function updateBalance(address) {
   contractInstance.methods.balanceOf(address).call()
@@ -136,6 +160,37 @@ function updateNumTokens() {
   });
 }
 
+function sumUp() {
+  const tbody = $("#sumup").find('tbody');
+  $('#sumup tr').each(function (i, row) {
+    row.remove();
+  });
+
+  let balancesTOK = [];
+  web0.eth.accounts.forEach(function (i, address) {
+    contractInstance.methods.balanceOf(address).call()
+    .then((res) => {
+      balancesTOK.append(parseFloat(web0.fromWei(res)).toFixed(3));
+    });
+  });
+
+  let balancesETH = [];
+  web0.eth.accounts.forEach(function (i, address) {
+    web1.eth.getBalance(address)
+    .then((res) => {
+      balancesETH.append(parseFloat(web0.fromWei(res,"ether")));
+    });
+  });
+
+
+  console.log(balancesETH);
+  console.log(balancesTOK);
+
+  web0.eth.accounts.forEach(function (i, address) {
+    tbody.append("<tr><th scope='row'>" + i + "</th><td></td><td>" + balancesETH[i] + "</td><td>" + balancesTOK[i] + "</td></tr>");
+  });
+
+}
 
 
 // $(document).ready(function() {

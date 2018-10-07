@@ -31,7 +31,7 @@
     </div>
     <input type="text" class="form-control" name="buy" id="buy-value" placeholder="Amount">
 </div>
-  <a href="#" onclick="buy()" class="btn btn-primary">Buy tokens</a>
+  <a href="#" onclick="buy()" class="btn btn-primary">Buy TOK</a>
 </form>
 <br />
 <form class="form-inline">
@@ -42,7 +42,7 @@
      <input type="text" class="form-control"  name="sell" id="sell-value" placeholder="Amount">
  </div>
 
-  <a href="#" onclick="sell()" class="btn btn-primary">Sell tokens</a>
+  <a href="#" onclick="sell()" class="btn btn-primary">Sell TOK</a>
 </form>
 
 <br />
@@ -62,7 +62,7 @@
      </div>
    </div>
    <div class="col-auto">
-     <a href="#" onclick="transfer()" class="btn btn-primary">Transfer tokens</a>
+     <a href="#" onclick="transfer()" class="btn btn-primary">Transfer TOK</a>
    </div>
  </div>
 
@@ -77,15 +77,42 @@
        <input type="text" class="form-control"  name="revenue" id="revenue-value" placeholder="Invoice">
    </div>
 
-    <a href="#" onclick="revenue()" class="btn btn-primary">Revenue</a>
+    <a href="#" onclick="revenue()" class="btn btn-primary">Pay</a>
   </form>
 
+<br />
+
+  <form class="form-inline">
+    <div class="input-group">
+       <div class="input-group-prepend">
+         <div class="input-group-text">ETH</div>
+       </div>
+       <input type="text" class="form-control"  name="revenue" id="grant-value" placeholder="Amount">
+   </div>
+
+    <a href="#" onclick="grant()" class="btn btn-primary">Grant</a>
+  </form>
 
 
   <br />
   <h1>Balance: <span id="balance-tok">0</span> TOK - <span id="balance-eth">0</span> ETH</h1>
   <h1>Selling reserve: <span id="sell-reserve">0</span> ETH</h1>
   <h1>Total supply: <span id="n-tokens">0</span> TOK</h1>
+
+
+  <!-- <table class="table" id="sumup" onload="sumUp()">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">ETH</th>
+      <th scope="col">TOK</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table> -->
 </body>
 <script>
 const address = "0x17340ae47ad9033446c5633b8d76f98c57010210";
