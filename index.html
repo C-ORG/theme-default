@@ -24,80 +24,138 @@
 
 
 
-<form class="form-inline">
- <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text">ETH</div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          Buy TOK tokens - <span class="badge badge-secondary"><span id="balance-tok">0</span> TOK</span>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">TOK is a very promising token.</h5>
+          <p class="card-text">So set up your Metasmask account and go bullish!</p>
+          <form class="form-inline">
+           <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">ETH</div>
+              </div>
+              <input type="text" class="form-control" name="buy" id="buy-value" placeholder="Amount">
+          </div>
+            <a href="#" onclick="buy()" class="btn btn-primary">Buy TOK</a>
+          </form>
+        </div>
+      </div>
     </div>
-    <input type="text" class="form-control" name="buy" id="buy-value" placeholder="Amount">
+
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          Sell TOK tokens - <span class="badge badge-secondary"><span id="balance-eth">0</span> ETH</span>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Selling is always a bad option.</h5>
+          <p class="card-text">Heroes are hodler, dude!</p>
+          <form class="form-inline">
+            <div class="input-group">
+               <div class="input-group-prepend">
+                 <div class="input-group-text">TOK</div>
+               </div>
+               <input type="text" class="form-control"  name="sell" id="sell-value" placeholder="Amount">
+           </div>
+
+            <a href="#" onclick="sell()" class="btn btn-primary">Sell TOK</a>
+        </div>
+      </div>
+  </div>
 </div>
-  <a href="#" onclick="buy()" class="btn btn-primary">Buy TOK</a>
-</form>
-<br />
-<form class="form-inline">
-  <div class="input-group">
-     <div class="input-group-prepend">
-       <div class="input-group-text">TOK</div>
-     </div>
-     <input type="text" class="form-control"  name="sell" id="sell-value" placeholder="Amount">
- </div>
-
-  <a href="#" onclick="sell()" class="btn btn-primary">Sell TOK</a>
-</form>
 
 <br />
-
-<div class="form-row align-items-center">
-   <div class="col-auto">
-     <label class="sr-only" for="inlineFormInput">Address</label>
-     <input type="text" class="form-control mb-2" id="transfer-address" placeholder="Recipient">
-   </div>
-   <div class="col-auto">
-     <label class="sr-only" for="inlineFormInputGroup">Value</label>
-     <div class="input-group mb-2">
-       <div class="input-group-prepend">
-         <div class="input-group-text">TOK</div>
+<div class="card-group">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Transfering ERC20</h5>
+      <div class="form-row align-items-center">
+         <div class="col-auto">
+           <label class="sr-only" for="inlineFormInput">Address</label>
+           <input type="text" class="form-control mb-2" id="transfer-address" placeholder="Recipient">
+         </div>
+         <div class="col-auto">
+           <label class="sr-only" for="inlineFormInputGroup">Value</label>
+           <div class="input-group mb-2">
+             <div class="input-group-prepend">
+               <div class="input-group-text">TOK</div>
+             </div>
+             <input type="text" class="form-control" id="transfer-amount" placeholder="Amount">
+           </div>
+         </div>
+         <div class="col-auto">
+           <a href="#" onclick="transfer()" class="btn btn-primary">Transfer TOK</a>
+         </div>
        </div>
-       <input type="text" class="form-control" id="transfer-amount" placeholder="Amount">
-     </div>
-   </div>
-   <div class="col-auto">
-     <a href="#" onclick="transfer()" class="btn btn-primary">Transfer TOK</a>
-   </div>
- </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Paying an invoice</h5>
+      <p class="card-text">A part of the invoice is transformed into tokens for hodlers.</p>
 
-
-   <br />
-
-  <form class="form-inline">
-    <div class="input-group">
-       <div class="input-group-prepend">
-         <div class="input-group-text">ETH</div>
+      <form class="form-inline">
+        <div class="input-group">
+           <div class="input-group-prepend">
+             <div class="input-group-text">ETH</div>
+           </div>
+           <input type="text" class="form-control"  name="revenue" id="revenue-value" placeholder="Invoice">
        </div>
-       <input type="text" class="form-control"  name="revenue" id="revenue-value" placeholder="Invoice">
-   </div>
 
-    <a href="#" onclick="revenue()" class="btn btn-primary">Pay</a>
-  </form>
+        <a href="#" onclick="revenue()" class="btn btn-primary">Pay</a>
+      </form>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Distributing dividends</h5>
+      <p class="card-text">Because you want to attract investors, you can distribute some tokens to your hodlers.</p>
+      <form class="form-inline">
+        <div class="input-group">
+           <div class="input-group-prepend">
+             <div class="input-group-text">ETH</div>
+           </div>
+           <input type="text" class="form-control"  name="revenue" id="grant-value" placeholder="Amount">
+       </div>
+
+        <a href="#" onclick="grant()" class="btn btn-primary">Grant</a>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 <br />
 
-  <form class="form-inline">
-    <div class="input-group">
-       <div class="input-group-prepend">
-         <div class="input-group-text">ETH</div>
-       </div>
-       <input type="text" class="form-control"  name="revenue" id="grant-value" placeholder="Amount">
-   </div>
-
-    <a href="#" onclick="grant()" class="btn btn-primary">Grant</a>
-  </form>
 
 
-  <br />
-  <h1>Balance: <span id="balance-tok">0</span> TOK - <span id="balance-eth">0</span> ETH</h1>
-  <h1>Selling reserve: <span id="sell-reserve">0</span> ETH</h1>
-  <h1>Total supply: <span id="n-tokens">0</span> TOK</h1>
+<div class="card-group">
+  <div class="card">
+    <div class="card-body">
+      <img class="card-img-top" src="bonding_curve.png" style="width: 25rem;" alt="Card image cap">
+    </div>
+  </div>
+    <div class="card">
+        <div class="card-body">
+      <h5 class="card-title"><em>Bonding curves</em> are powering continuous organizations.</h5>
+      <p class="card-text">
+      Selling reserve: <span class="badge badge-secondary"><span <span id="sell-reserve">0</span> ETH</span>
+    </p>
+    <p class="card-text">
+      Total supply: <span class="badge badge-secondary"><span id="n-tokens">0</span> TOK</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+
 
 
   <!-- <table class="table" id="sumup">
