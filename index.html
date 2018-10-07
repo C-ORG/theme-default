@@ -132,7 +132,16 @@
 
 <br />
 
+<table class="table" id="sumup">
+<thead>
 
+</thead>
+<tbody>
+
+</tbody>
+</table>
+
+<br />
 
 <div class="card-group">
   <div class="card">
@@ -153,28 +162,10 @@
   </div>
 </div>
 
-
-
-
-
-
-  <!-- <table class="table" id="sumup">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">ETH</th>
-      <th scope="col">TOK</th>
-    </tr>
-  </thead>
-  <tbody>
-
-  </tbody>
-</table> -->
 </body>
 <script>
 
-let address = "0x17340ae47ad9033446c5633b8d76f98c57010210";
+let address = "0x55fef113983e9b5bbdde30f69f062cce755af1fa";
 const abi = [
   {
     "constant": true,
@@ -705,7 +696,10 @@ const abi = [
   },
   {
     "constant": false,
-    "inputs": [],
+    "inputs": [ {
+          "name": "_spender",
+          "type": "address"
+        }],
     "name": "askDividend",
     "outputs": [],
     "payable": false,
